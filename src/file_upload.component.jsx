@@ -3,15 +3,24 @@ import React, { Component } from 'react';
 class Upload extends React.Component{
     constructor(props){
         super(props);
-        this.sendData=this.sendData.bind(this);
+        this.handleFileChange=this.handleFileChange.bind(this);
+        
+        this.state={files:[]};
     }
 
-    sendData(e){
+    handleFileChange(e){
+
         const reader = new FileReader();
-         const file = e.target.files[0];
-         var formData  = new FormData();
-         formData.append("file",file);
-         console.log(file)
+        this.setState({files:e.target.files})
+        var files=this.state.files;
+        var formData  = new FormData();
+        Object.keys(e.target.files).forEach(function(key) {
+            //files.push(e.target.files[key]);
+            formData.append('files', e.target.files[key]);
+        });
+        console.log(formData);
+        
+        
         fetch('http://localhost:3000/users/upload',{
             method: "POST",
             body: formData
@@ -28,7 +37,7 @@ class Upload extends React.Component{
     render(){
         return(
         <div>
-            <input type='file'  onChange={this.sendData} />
+            <input type='file'  onChange={this.handleFileChange} multiple/>
             </div>
         );
     }
