@@ -21,7 +21,7 @@ class Upload extends React.Component{
         console.log(formData);
         
         
-        fetch('http://localhost:3000/users/upload',{
+        fetch('http://localhost:3000/test/upload',{
             method: "POST",
             body: formData
         })
